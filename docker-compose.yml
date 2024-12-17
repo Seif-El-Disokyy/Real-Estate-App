@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./real-estate-app      # Path to the React frontend
+      dockerfile: Dockerfile   # Dockerfile for React
+    ports:
+      - "8080:80"              # Map Nginx port 80 to host port 8080
+    restart: always
+    depends_on:
+      - backend                # Start backend first
+
+  backend:
+    build:
+      context: ./real-estate-api       # Path to the backend app
+      dockerfile: Dockerfile   # Dockerfile for backend
+    ports:
+      - "3000:3000"            # Map backend port 3000
+    environment:               # Add environment variables if needed
+      - NODE_ENV=production
+    restart: always
